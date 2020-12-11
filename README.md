@@ -29,6 +29,8 @@ in order to achieve the final goal, it is needed to learn further about CAN BUS 
    - [ ] Send and receive data from ROS via master arduino to 2 slave arduino, with different data sent/response for different data received as trigger (may be a sensor/potentiometer)
 
 
+test upload
+
     
 
 

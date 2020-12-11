@@ -3,6 +3,10 @@
 #include <Arduino.h>
 #include <mcp_can.h>
 #include <SPI.h>
+#include "mcp_can.h"
+#include <stdio.h>
+
+#define INT8U unsigned char
 const int SPI_CS_PIN = 10;
 MCP_CAN CAN(SPI_CS_PIN);
 
@@ -12,6 +16,15 @@ int btnPin = 8;
 int potValue = 0;
 int cantxValue = 0;
 int btnValue = 0;
+
+INT8U len = 0;
+INT8U buf[8];
+unsigned char canId;
+char str[20];
+
+int btnvalue;
+int potvalue;
+
 
 void setup()
 {
@@ -42,6 +55,18 @@ void setup()
   //Send Data Construction:  id = 0x07B ---  standart Flame ---  data lenght = 8 ----  stmp:data buf
   CAN.sendMsgBuf(0x07B, 0, 8, canMsg);
   delay(100);
+      while (CAN_MSGAVAIL == CAN.checkReceive())
+        {
+      CAN.readMsgBuf(&len, buf);
+      canId = CAN.getCanId();
+      potvalue = buf[0];
+      btnvalue = buf[1];
+      }
+      
+       Serial.print(" Potensiometer Value : ");
+       Serial.print(potvalue);
+       Serial.print(" Button Value : ");
+       Serial.println(btnvalue);
 }
 
     
